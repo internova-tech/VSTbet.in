@@ -1,0 +1,21 @@
+"use client";
+import { useEffect, useState } from "react";
+
+const matches = [
+  { league:"Premier League", teams:["Northbridge FC","Westhaven United"], score:["2","1"], minute:67, odds:["1.42","4.85","7.20"] },
+  { league:"International Cricket", teams:["Royal Falcons","Coastal Kings"], score:["184/5","171/7"], minute:16, odds:["1.68","2.12","3.40"] },
+  { league:"Pro Basketball", teams:["Metro Lions","Harbor Hawks"], score:["78","74"], minute:31, odds:["1.58","2.48","4.10"] },
+];
+
+export default function Home() {
+  const [active, setActive] = useState("Sports");
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => { const id=setInterval(()=>setPulse(v=>v+1),1800); return()=>clearInterval(id); },[]);
+  return <main>
+    <header className="nav"><div className="brand"><span className="brand-mark">V</span><span>VST<span>bet</span></span></div><nav>{["Sports","Casino","Live","Promotions","VIP"].map(x=><button key={x} className={active===x?"nav-link active":"nav-link"} onClick={()=>setActive(x)}>{x}</button>)}</nav><div className="nav-actions"><button className="ghost">Log in</button><button className="primary">Create account</button></div></header>
+    <section className="hero"><div className="hero-copy"><div className="eyebrow"><i/> LIVE DEMO EXPERIENCE <b>NO REAL MONEY</b></div><h1>Play the moment.<br/><em>Feel every move.</em></h1><p>VSTbet brings live sports energy and premium casino entertainment together in one beautifully engineered experience.</p><div className="hero-actions"><button className="primary large">Explore Sports <span>→</span></button><button className="ghost large">Enter Casino</button></div><div className="trust"><span>● Real-time demo data</span><span>● Secure by design</span><span>● 18+ entertainment</span></div></div><div className="hero-card"><div className="card-top"><span><i className="live-dot"/> LIVE NOW</span><small>DEMO MARKET</small></div><div className="fixture"><div><small>FOOTBALL · 67'</small><strong>Northbridge FC</strong><strong>Westhaven United</strong></div><div className="score"><b>2</b><b>1</b></div></div><div className="timeline"><span style={{width:"67%"}}/></div><div className="market-grid">{["Home","Draw","Away"].map((x,i)=><div key={x}><small>{x}</small><strong>{(1.42+i*3.43 + pulse%3*0.01).toFixed(2)}</strong></div>)}</div><div className="demo-note">Preview market · simulated for demonstration</div></div></section>
+    <section className="section"><div className="section-head"><div><span className="kicker">LIVE CENTRE</span><h2>What’s happening now</h2></div><button className="text-btn">View all markets →</button></div><div className="match-grid">{matches.map((m,idx)=><article className="match" key={m.league}><div className="match-head"><span><i className="live-dot"/>{m.league}</span><small>{idx===1?"16th over":m.minute+"'"}</small></div><div className="teams"><div><span>{m.teams[0]}</span><span>{m.teams[1]}</span></div><div className="scores"><b>{m.score[0]}</b><b>{m.score[1]}</b></div></div><div className="odds-row">{m.odds.map((o,i)=><button key={i}><small>{["1","X","2"][i]}</small><b>{(Number(o)+(pulse%2)*0.01).toFixed(2)}</b></button>)}</div></article>)}</div></section>
+    <section className="split-section"><div className="promo-card casino"><div className="kicker">CASINO</div><h2>A premium game floor.</h2><p>Original game concepts, polished motion and a lobby built for discovery.</p><button className="primary">Explore Casino →</button></div><div className="promo-card vip"><div className="kicker">VST PRIVILEGE</div><h2>Built for the details.</h2><p>Personalized profiles, favourites, history and a refined member experience.</p><button className="ghost">Discover VIP →</button></div></section>
+    <footer><div className="brand"><span className="brand-mark">V</span><span>VST<span>bet</span></span></div><p>Promotional entertainment experience. Demo markets and virtual gameplay have no cash value.</p><div className="footer-links"><span>Responsible Play</span><span>Privacy</span><span>Terms</span><span>Support</span></div></footer>
+  </main>;
+}
